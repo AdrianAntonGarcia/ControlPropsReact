@@ -9,6 +9,7 @@ export interface Props {
   children?: ReactElement | ReactElement[];
   className?: string;
   style?: CSSProperties;
+  onChange?: () => void;
 }
 
 /**
@@ -16,9 +17,15 @@ export interface Props {
  * @param param0
  * @returns
  */
-export const ProductCard = ({ children, product, className, style }: Props) => {
+export const ProductCard = ({
+  children,
+  product,
+  className,
+  style,
+  onChange,
+}: Props) => {
   const { Provider } = ProductContext;
-  const { counter, increaseBy } = useProduct();
+  const { counter, increaseBy } = useProduct(onChange);
   return (
     <Provider value={{ counter, increaseBy, product }}>
       <div style={style} className={`${styles.productCard} ${className}`}>
