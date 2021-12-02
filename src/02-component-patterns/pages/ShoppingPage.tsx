@@ -1,17 +1,19 @@
 import ProductCard from '../components';
-import { ProductImage, ProductTitle, ProductButtons } from '../components';
+import { Product } from '../interfaces';
 import '../styles/custom-styles.css';
-const product = {
+
+const product1 = {
   id: '1',
   title: 'Coffee Mug - Card',
   img: './coffee-mug.png',
 };
 
 const product2 = {
-  id: '1',
+  id: '2',
   title: 'Coffee Mug - Meme',
   img: './coffee-mug2.png',
 };
+const products: Product[] = [product1, product2];
 
 export const ShoppingPage = () => {
   return (
@@ -19,19 +21,33 @@ export const ShoppingPage = () => {
       <h1>Shopping Store</h1>
       <hr />
       <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
-        {/* <ProductCard product={product}>
-          <ProductCard />
-          <ProductCard title={product.title} />
-          <ProductCard counter={0} increaseBy={() => {}} />
-        </ProductCard> */}
-        <ProductCard product={product} className="bg-dark text-white">
-          <ProductImage className="custom-image" />
-          <ProductTitle className="text-bold" />
-          <ProductButtons className="custom-buttons" />
-        </ProductCard>
-        <ProductCard product={product2} className="bg-dark text-white">
+        {products.map((product) => (
+          <ProductCard
+            key={product.id}
+            product={product}
+            className="bg-dark text-white"
+          >
+            <ProductCard.Image className="custom-image" />
+            <ProductCard.Title className="text-bold" />
+            <ProductCard.Buttons className="custom-buttons" />
+          </ProductCard>
+        ))}
+      </div>
+      <div className="shopping-cart ">
+        <ProductCard
+          product={product2}
+          className="bg-dark text-white"
+          style={{ width: '100px' }}
+        >
           <ProductCard.Image className="custom-image" />
-          <ProductCard.Title className="text-bold" />
+          <ProductCard.Buttons className="custom-buttons" />
+        </ProductCard>
+        <ProductCard
+          product={product1}
+          className="bg-dark text-white"
+          style={{ width: '100px' }}
+        >
+          <ProductCard.Image className="custom-image" />
           <ProductCard.Buttons className="custom-buttons" />
         </ProductCard>
       </div>
