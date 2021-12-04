@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import ProductCard from '../components';
 import { Product } from '../interfaces';
 import '../styles/custom-styles.css';
-import { useState } from 'react';
 
 const product1 = {
   id: '1',
@@ -22,9 +22,9 @@ interface ProductInCart extends Product {
 }
 
 export const ShoppingPage = () => {
-  // const [shoppingCart, setShoppingCart] = useState<{
-  //   [key: string]: ProductInCart;
-  // }>();
+  const [shoppingCart, setShoppingCart] = useState<{
+    [key: string]: ProductInCart;
+  }>({});
 
   const onProductCountChange = ({
     count,
@@ -33,7 +33,14 @@ export const ShoppingPage = () => {
     count: number;
     product: Product;
   }) => {
-    console.log(count, product);
+    setShoppingCart((oldShoppingCart) => {
+      if (count === 0) {
+        delete oldShoppingCart[product.id];
+        return { ...oldShoppingCart };
+      } else {
+        return { ...oldShoppingCart, [product.id]: { ...product, count } };
+      }
+    });
   };
   return (
     <div>
@@ -70,6 +77,9 @@ export const ShoppingPage = () => {
           <ProductCard.Image className="custom-image" />
           <ProductCard.Buttons className="custom-buttons" />
         </ProductCard>
+      </div>
+      <div>
+        <code>{JSON.stringify(shoppingCart, null, 5)}</code>
       </div>
     </div>
   );
