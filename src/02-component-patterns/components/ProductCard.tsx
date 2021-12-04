@@ -10,6 +10,7 @@ export interface Props {
   className?: string;
   style?: CSSProperties;
   onChange?: (args: OnChangeArgs) => void;
+  value?: number;
 }
 
 /**
@@ -23,9 +24,10 @@ export const ProductCard = ({
   className,
   style,
   onChange,
+  value,
 }: Props) => {
   const { Provider } = ProductContext;
-  const { counter, increaseBy } = useProduct({ onChange, product });
+  const { counter, increaseBy } = useProduct({ onChange, product, value });
   return (
     <Provider value={{ counter, increaseBy, product }}>
       <div style={style} className={`${styles.productCard} ${className}`}>
