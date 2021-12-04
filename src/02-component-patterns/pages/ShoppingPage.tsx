@@ -25,7 +25,7 @@ export const ShoppingPage = () => {
   const [shoppingCart, setShoppingCart] = useState<{
     [key: string]: ProductInCart;
   }>({});
-
+  console.log(Object.keys(shoppingCart));
   const onProductCountChange = ({
     count,
     product,
@@ -61,22 +61,21 @@ export const ShoppingPage = () => {
         ))}
       </div>
       <div className="shopping-cart ">
-        <ProductCard
-          product={product2}
-          className="bg-dark text-white"
-          style={{ width: '100px' }}
-        >
-          <ProductCard.Image className="custom-image" />
-          <ProductCard.Buttons className="custom-buttons" />
-        </ProductCard>
-        <ProductCard
-          product={product1}
-          className="bg-dark text-white"
-          style={{ width: '100px' }}
-        >
-          <ProductCard.Image className="custom-image" />
-          <ProductCard.Buttons className="custom-buttons" />
-        </ProductCard>
+        {/* también se puede hacer con el .entries */}
+        {Object.keys(shoppingCart).map((index) => (
+          <ProductCard
+            key={index}
+            product={shoppingCart[index]}
+            className="bg-dark text-white"
+            style={{ width: '100px' }}
+          >
+            <ProductCard.Image className="custom-image" />
+            <ProductCard.Buttons
+              style={{ display: 'flex', justifyContent: 'center' }}
+              className="custom-buttons"
+            />
+          </ProductCard>
+        ))}
       </div>
       <div>
         <code>{JSON.stringify(shoppingCart, null, 5)}</code>
