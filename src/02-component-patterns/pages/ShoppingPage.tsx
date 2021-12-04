@@ -33,12 +33,29 @@ export const ShoppingPage = () => {
     product: Product;
   }) => {
     setShoppingCart((oldShoppingCart) => {
-      if (count === 0) {
+      // Si no existe lo creamos
+      const productInCart: ProductInCart = oldShoppingCart[product.id] || {
+        ...product,
+        count: 0,
+      };
+      // Cuando el producto tiene más de una unidad
+      if (Math.max(productInCart.count + count, 0) > 0) {
+        productInCart.count += count;
+        return {
+          ...oldShoppingCart,
+          [product.id]: { ...productInCart },
+        };
+      } else {
+        // Borrar el producto
         delete oldShoppingCart[product.id];
         return { ...oldShoppingCart };
-      } else {
-        return { ...oldShoppingCart, [product.id]: { ...product, count } };
       }
+      // if (count === 0) {
+      //   delete oldShoppingCart[product.id];
+      //   return { ...oldShoppingCart };
+      // } else {
+      //   return { ...oldShoppingCart, [product.id]: { ...product, count } };
+      // }
     });
   };
   return (
